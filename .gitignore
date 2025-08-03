@@ -1,0 +1,55 @@
+# Python specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environment
+venv/
+.env/
+.venv/
+env/
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dataset and model files/folders to exclude
+dataset/
+
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
