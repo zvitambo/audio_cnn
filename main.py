@@ -26,7 +26,7 @@ class AudioProcessor:
     def __init__(self):
         self.transform = nn.Sequential( 
         T.MelSpectrogram(
-            sample_rate=44100,
+            sample_rate=22050,
             n_fft=1024,
             hop_length=512,
             n_mels=128,
@@ -70,8 +70,8 @@ class AudioClassifier:
         if audio_data.ndim > 1:
             audio_data = np.mean(audio_data, axis=1)  # Convert to mono if stereo
 
-        if sample_rate != 44100:
-            audio_data = librosa.resample(y=audio_data, orig_sr=sample_rate, target_sr=44100)
+        if sample_rate != 22050:
+            audio_data = librosa.resample(y=audio_data, orig_sr=sample_rate, target_sr=22050)
 
         spectrogram = self.audio_processor.process_audio_chuck(audio_data)
         spectrogram = spectrogram.to(self.device)
@@ -100,10 +100,10 @@ class AudioClassifier:
            
 
             spectrogram_np = spectrogram.squeeze(0).squeeze(0).cpu().numpy()  # Remove batch dimension and channels
-            clean_spectrogram = np.nan_to_num(spectrogram_np).tolist()  # Clean NaN values
+            clean_spectrogram = np.nan_to_num(spectrogram_np)  # Clean NaN values
             
             max_samples = 8000
-            waveform_sample_rate = 44100
+            waveform_sample_rate = 22050
             if len(audio_data) > max_samples:
                 step = len(audio_data) // max_samples
                 waveform_data = audio_data[::step]
@@ -131,7 +131,7 @@ def main():
     audio_data, sample_rate = sf.read("knocking.wav")
 
     buffer = io.BytesIO()
-    sf.write(buffer, audio_data, 44100, format='WAV')
+    sf.write(buffer, audio_data, 22050, format='WAV')
     audio_b64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
     payload = {"audio_data": audio_b64}
 
